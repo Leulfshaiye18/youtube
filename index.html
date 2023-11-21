@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My YouTube Videos</title>
+  <link rel="stylesheet" href="tg.css">
+  <style>
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+
+<div id="videos-container"></div>
+</div>
+<script>
+  // Replace 'YOUR_API_KEY' with your actual API key
+  var apiKey = 'AIzaSyCWLtWtAa2Cus0BO2uupTIomtTKgnxRfxk';
+  var channelId = 'UCl45YK_OUouW6HTqeMSGW3Q'; // Replace with your channel ID
+
+  // Fetch videos from YouTube Data API
+  fetch('https://www.googleapis.com/youtube/v3/search?key=' + apiKey + '&channelId=' + channelId + '&part=snippet,id&order=date&maxResults=10')
+    .then(response => response.json())
+    .then(data => {
+      displayVideos(data.items);
+    });
+
+  // Display videos on the web page
+  function displayVideos(videos) {
+    var container = document.getElementById('videos-container');
+
+    videos.forEach(video => {
+      var videoCard = document.createElement('div');
+      videoCard.className = 'video-card';
+
+      var thumbnail = document.createElement('img');
+      thumbnail.className = 'video-thumbnail';
+      thumbnail.src = video.snippet.thumbnails.medium.url;
+
+      var title = document.createElement('div');
+      title.className = 'video-title';
+      title.textContent = video.snippet.title;
+
+      var link = document.createElement('a');
+      link.className = 'video-link';
+      link.href = 'https://www.youtube.com/watch?v=' + video.id.videoId;
+      link.textContent = 'Watch Video';
+      link.href='https://www.youtube.com/watch?v=' + video.id.videoId;
+      link.textcontent="my chnale"
+
+      videoCard.appendChild(thumbnail);
+      videoCard.appendChild(title);
+      videoCard.appendChild(link);
+
+      container.appendChild(videoCard);
+    });
+  }
+</script>
+
+</body>
+</html>
